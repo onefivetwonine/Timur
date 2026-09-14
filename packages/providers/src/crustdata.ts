@@ -74,8 +74,8 @@ export const crustdataAdapter: ProviderAdapter = {
     const apiKey = env.CRUSTDATA_API_KEY!;
     const limit = Math.min(options.limit ?? 10, 25);
     try {
-      const names = ['DBS Bank', 'OCBC Bank', 'United Overseas Bank', 'Grab', 'Sea Limited'];
-      const identified = await crustPost('/company/identify', apiKey, { names }) as Array<{
+      const domains = ['dbs.com', 'ocbc.com', 'uob.com.sg', 'grab.com', 'sea.com'];
+      const identified = await crustPost('/company/identify', apiKey, { domains }) as Array<{
         matched_on?: string;
         matches?: Array<Record<string, unknown>>;
       }>;
