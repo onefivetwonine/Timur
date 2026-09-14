@@ -64,6 +64,7 @@ database, API liveness works and readiness reports unavailable.
 - [Azure infrastructure and state setup](../../infra/README.md)
 - [Backup and disaster recovery](../operations/backup-and-recovery.md)
 - [Implementation roadmap](../plans/implementation-roadmap.md)
+- [External data providers](../plans/data-source-providers.md)
 - [Production launch checklist](../operations/launch-checklist.md)
 - [Verification record](../reference/verification.md)
 

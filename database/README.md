@@ -7,9 +7,11 @@ and refuses changed or missing migration history. Each file runs transactionally
 Only local synthetic POC migration execution is enabled by that script.
 
 `0001_foundation.sql` creates tenant and transactional outbox infrastructure.
-It does not create candidate tables, implement ingestion, claim audit integrity,
-or consume work. The worker is deliberately idle. Domain-event persistence and
-each of the five product aggregates need a reviewed subsequent migration.
+`0002_talent_domain.sql` adds employers, subjects, external ID links, authority
+grants, source artefacts (manual CV quarantine metadata), evidence claims and
+opportunity twins — still without upload APIs or worker consumers. Binary files
+stay outside SQL (local `.local/uploads/` until Azure blob). Decision envelopes
+and domain-event tables remain subsequent migrations.
 
 The application connects as `timur_app`, which owns no tables and has no
 `BYPASSRLS`. A service must set `app.tenant_id` using `SET LOCAL`/`set_config` in
