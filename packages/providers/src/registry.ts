@@ -8,13 +8,16 @@ import {
   zoominfoAdapter,
 } from './commercial.js';
 import { crustdataAdapter } from './crustdata.js';
+import { datagovsgAdapter, githubAdapter, huggingfaceAdapter } from './open-web.js';
 import { peopledatalabsAdapter } from './peopledatalabs.js';
 import { acraBizfileAdapter, mycareersfutureAdapter, opencorporatesAdapter } from './public-sg.js';
+import { dinqAdapter, linkedinAdapter } from './talent-search.js';
 import type { ProviderAdapter, ProviderCredentials, ProviderId, ProviderPullResult } from './types.js';
 import { providerIds } from './types.js';
 
 export const providers: readonly ProviderAdapter[] = [
   crustdataAdapter,
+  dinqAdapter,
   peopledatalabsAdapter,
   apolloAdapter,
   zoominfoAdapter,
@@ -23,9 +26,13 @@ export const providers: readonly ProviderAdapter[] = [
   theorgAdapter,
   hunterAdapter,
   proxycurlAdapter,
+  linkedinAdapter,
+  githubAdapter,
+  huggingfaceAdapter,
   opencorporatesAdapter,
   acraBizfileAdapter,
   mycareersfutureAdapter,
+  datagovsgAdapter,
 ];
 
 export function getProvider(id: ProviderId): ProviderAdapter {

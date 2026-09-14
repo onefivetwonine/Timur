@@ -1,5 +1,6 @@
 export const providerIds = [
   'crustdata',
+  'dinq',
   'peopledatalabs',
   'apollo',
   'zoominfo',
@@ -8,9 +9,13 @@ export const providerIds = [
   'theorg',
   'hunter',
   'proxycurl',
+  'linkedin',
+  'github',
+  'huggingface',
   'opencorporates',
   'acra_bizfile',
   'mycareersfuture',
+  'datagovsg',
 ] as const;
 
 export type ProviderId = (typeof providerIds)[number];
