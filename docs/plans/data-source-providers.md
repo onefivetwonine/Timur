@@ -37,6 +37,18 @@ accuracy for your Singapore role families.
 | [data.gov.sg](https://data.gov.sg/) | Open government datasets | Company/economy slices; check freshness and licence |
 | First-party agency history | Prior placements, consented CVs | Matches locked “authorized first-party history” — highest credibility for Talent |
 
+## Code adapters
+
+Runnable peers live in `@timur/providers`. Copy
+`config/environments/providers.env.example` to ignored `.local/providers.env`,
+fill keys you have, then:
+
+```sh
+npm run providers:pull
+```
+
+Snapshots write only under `.local/provider-snapshots/`.
+
 ## How this maps to the local schema
 
 1. Manual CV → `source_artefacts` (`kind=cv_upload`, `provider=manual`, status `quarantine`).

@@ -6,7 +6,8 @@
   "workspaces": ["packages/*", "apps/*"],
   "engines": { "node": ">=24 <27", "npm": ">=11 <13" },
   "scripts": {
-    "build": "npm run build -w @timur/runtime && npm run build -w @timur/contracts && npm run build -w @timur/api && npm run build -w @timur/worker && npm run build -w @timur/web",
+    "build": "npm run build -w @timur/runtime && npm run build -w @timur/contracts && npm run build -w @timur/providers && npm run build -w @timur/api && npm run build -w @timur/worker && npm run build -w @timur/web",
+    "providers:pull": "npm run build -w @timur/providers && node --env-file=.local/providers.env scripts/providers/pull-available.mjs",
     "typecheck": "npm run build -w @timur/runtime && npm run typecheck --workspaces --if-present",
     "test": "npm run build -w @timur/runtime && npm run test --workspaces --if-present",
     "check": "npm run check:repository && npm run typecheck && npm test",
