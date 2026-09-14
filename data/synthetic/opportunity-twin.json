@@ -1,0 +1,18 @@
+{
+  "schema_version": "0.2.1",
+  "tenant_id": "synthetic-tenant-a",
+  "opportunity_id": "synthetic-role-001",
+  "status": "draft",
+  "employer": {
+    "employer_id": "synthetic-employer-001",
+    "legal_name_attested": false
+  },
+  "role": {
+    "title": "Synthetic engineering role",
+    "role_family": "synthetic-unfrozen",
+    "country": "SG"
+  },
+  "requirements": [],
+  "created_at": "2026-09-13T00:00:00Z",
+  "updated_at": "2026-09-13T00:00:00Z"
+}

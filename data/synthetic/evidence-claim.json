@@ -1,0 +1,21 @@
+{
+  "schema_version": "0.2.1",
+  "tenant_id": "synthetic-tenant-a",
+  "claim_id": "synthetic-claim-001",
+  "subject_id": "synthetic-subject-001",
+  "predicate": "skill.example",
+  "value": "synthetic",
+  "source": {
+    "source_id": "synthetic-source-001",
+    "artefact_hash": "synthetic-not-a-real-document-hash",
+    "locator": {
+      "type": "record_path",
+      "record_id": "synthetic-record-001",
+      "path": "/skill"
+    }
+  },
+  "observed_at": "2026-09-13T00:00:00Z",
+  "verification_state": "extracted",
+  "confidence_band": "unknown",
+  "processing_authority_ref": "synthetic-authority-001"
+}

@@ -1,0 +1,11 @@
+{
+  "environment": "poc",
+  "data_mode": "synthetic",
+  "external_ai_enabled": false,
+  "ai_provider": "deterministic",
+  "region": "southeastasia",
+  "job_transport": "postgresql_outbox",
+  "live_data_accepted": false,
+  "outbound_recruitment_actions_enabled": false,
+  "purpose": "Synthetic architecture development and testing"
+}

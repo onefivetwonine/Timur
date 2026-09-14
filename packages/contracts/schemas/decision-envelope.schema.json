@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://human-talent.example/schemas/decision-envelope/0.2.1",
+  "title": "Decision Envelope",
+  "description": "Auditable candidate-opportunity assessment containing evidence, gates and the proposed human action.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "tenant_id",
+    "decision_id",
+    "subject_id",
+    "opportunity_id",
+    "evidence_assessments",
+    "gates",
+    "next_action",
+    "versions",
+    "created_at"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.2.1" },
+    "tenant_id": { "type": "string" },
+    "decision_id": { "type": "string" },
+    "subject_id": { "type": "string" },
+    "opportunity_id": { "type": "string" },
+    "employer_id": { "type": ["string", "null"] },
+    "evidence_assessments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["dimension", "assessment", "claim_refs", "explanation"],
+        "properties": {
+          "dimension": { "type": "string" },
+          "assessment": { "enum": ["strong", "moderate", "weak", "unknown"] },
+          "claim_refs": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+          "contradiction_refs": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+          "explanation": { "type": "string" }
+        }
+      }
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["gate_code", "gate_class", "result", "rule_version", "explanation"],
+        "properties": {
+          "gate_code": { "type": "string" },
+          "gate_class": { "enum": ["processing_authority", "eligibility", "feasibility", "action_authority", "regulatory_timing"] },
+          "result": { "enum": ["pass", "fail", "unknown", "not_applicable"] },
+          "rule_version": { "type": "string" },
+          "evidence_refs": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+          "explanation": { "type": "string" }
+        }
+      }
+    },
+    "next_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action_code", "authority_result", "explanation"],
+      "properties": {
+        "action_code": { "type": "string" },
+        "authority_result": { "enum": ["permitted", "blocked", "requires_attestation", "unknown"] },
+        "authority_ref": { "type": ["string", "null"] },
+        "explanation": { "type": "string" }
+      }
+    },
+    "human_decision": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "actor_id": { "type": "string" },
+        "decision_code": { "type": "string" },
+        "reason_code": { "type": "string" },
+        "recorded_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "versions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_pack", "decision_policy", "schema"],
+      "properties": {
+        "policy_pack": { "type": "string" },
+        "decision_policy": { "type": "string" },
+        "extractor": { "type": ["string", "null"] },
+        "embedding_model": { "type": ["string", "null"] },
+        "model_region": { "type": ["string", "null"] },
+        "deployment_type": { "type": ["string", "null"] },
+        "schema": { "type": "string" }
+      }
+    },
+    "correlation_id": { "type": ["string", "null"] },
+    "created_at": { "type": "string", "format": "date-time" }
+  }
+}
+

@@ -1,0 +1,7 @@
+subscription_id = "<dedicated-production-subscription-id>"
+tenant_id = "<entra-tenant-id>"
+name_suffix = "abc12"
+location = "southeastasia"
+database_admin_object_id = "<environment-operator-group-object-id>"
+database_admin_principal_name = "timur-production-database-operators"
+tags = { owner = "replace-me", cost_center = "timur" }

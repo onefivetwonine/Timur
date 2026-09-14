@@ -1,0 +1,6 @@
+resource_group_name  = "rg-timur-production-state"
+storage_account_name = "<unique-production-state-account>"
+container_name       = "tfstate"
+key                  = "timur/production/terraform.tfstate"
+use_azuread_auth      = true
+use_oidc             = true

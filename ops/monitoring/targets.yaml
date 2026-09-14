@@ -1,0 +1,23 @@
+# Specification only: not an Azure Monitor deployment or active alert policy.
+status: proposed_unprovisioned
+version: 1
+poc:
+  service_window: business_hours_by_agreement
+  availability_slo: null
+  backup_age_warning_hours: 26
+  restore_drill_overdue_days: 35
+  outbox_oldest_pending_warning_seconds: 300
+  responder_role: platform_owner
+production:
+  evaluation_window_days: 30
+  availability_target_percent: 99.9
+  availability_definition: eligible_authenticated_requests_without_server_errors_divided_by_all_eligible_authenticated_requests
+  latency_p95_target_ms: 1000
+  latency_scope: synchronous_metadata_api_excluding_uploads_and_ai_jobs
+  backup_recoverable_point_age_warning_minutes: 15
+  restore_drill_overdue_days: 100
+  job_oldest_pending_warning_seconds: 300
+  tenant_authorization_breach_alert_count: 1
+  source_evidence_integrity_failure_alert_count: 1
+  responder_role: production_on_call
+  measurement_status: instrumentation_and_baseline_required

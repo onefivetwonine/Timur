@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://human-talent.example/schemas/opportunity-twin/0.2.1",
+  "title": "Opportunity Twin",
+  "description": "Recruiter-confirmed representation of an employer's actionable hiring requirement.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "tenant_id",
+    "opportunity_id",
+    "status",
+    "employer",
+    "role",
+    "requirements",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.2.1" },
+    "tenant_id": { "type": "string", "minLength": 1 },
+    "opportunity_id": { "type": "string", "minLength": 1 },
+    "status": {
+      "enum": ["draft", "calibrating", "active", "on_hold", "closed", "cancelled"]
+    },
+    "employer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["employer_id", "legal_name_attested"],
+      "properties": {
+        "employer_id": { "type": "string" },
+        "legal_name": { "type": ["string", "null"] },
+        "uen": { "type": ["string", "null"] },
+        "legal_name_attested": { "type": "boolean" },
+        "sector": { "type": ["string", "null"] },
+        "financial_services": { "type": ["boolean", "null"] }
+      }
+    },
+    "role": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "role_family", "country"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "role_family": { "type": "string", "minLength": 1 },
+        "country": { "const": "SG" },
+        "work_location": { "type": ["string", "null"] },
+        "employment_type": { "type": ["string", "null"] },
+        "vacancy_count": { "type": ["integer", "null"], "minimum": 1 }
+      }
+    },
+    "salary": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["currency", "period", "minimum", "maximum"],
+      "properties": {
+        "currency": { "const": "SGD" },
+        "period": { "const": "month" },
+        "minimum": { "type": "number", "minimum": 0 },
+        "maximum": { "type": "number", "minimum": 0 },
+        "fixed_monthly_salary": { "type": ["number", "null"], "minimum": 0 }
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["requirement_id", "label", "kind", "mandatory", "evidence_rule"],
+        "properties": {
+          "requirement_id": { "type": "string" },
+          "label": { "type": "string" },
+          "kind": { "enum": ["capability", "certification", "experience", "location", "availability", "other"] },
+          "mandatory": { "type": "boolean" },
+          "evidence_rule": { "type": "string" },
+          "minimum_evidence_band": { "enum": ["strong", "moderate", "weak", "unknown"] }
+        }
+      }
+    },
+    "pass_context": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "anticipated_pass_type": { "enum": ["none", "ep", "s_pass", "unknown"] },
+        "employer_quota_state": { "enum": ["available", "unavailable", "unknown", "not_applicable"] },
+        "policy_pack_version": { "type": "string" }
+      }
+    },
+    "fcf": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "required": { "type": ["boolean", "null"] },
+        "exemption_code": { "type": ["string", "null"] },
+        "advertisement_id": { "type": ["string", "null"] },
+        "opened_at": { "type": ["string", "null"], "format": "date-time" },
+        "closed_at": { "type": ["string", "null"], "format": "date-time" },
+        "material_change_at": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "confirmed_by": { "type": ["string", "null"] },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}
+

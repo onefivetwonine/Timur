@@ -1,0 +1,15 @@
+{
+  "schema_version": "0.2.1",
+  "tenant_id": "synthetic-tenant-a",
+  "authority_id": "synthetic-authority-001",
+  "subject_id": "synthetic-subject-001",
+  "authority_type": "processing",
+  "purpose_code": "synthetic_fixture_validation",
+  "actions": [
+    "use"
+  ],
+  "basis_code": "synthetic_data",
+  "evidence_ref": "synthetic-fixture",
+  "valid_from": "2026-09-13T00:00:00Z",
+  "status": "active"
+}

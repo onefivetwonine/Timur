@@ -1,0 +1,11 @@
+# Copy to a private operational system; no personal contact information in public Git.
+status: unassigned
+roles:
+  platform_owner: {primary: null, backup: null}
+  application_owner: {primary: null, backup: null}
+  data_steward: {primary: null, backup: null}
+  incident_commander: {primary: null, backup: null}
+  production_on_call: {primary: null, backup: null}
+environments:
+  poc: {subscription_id: null, resource_group: null, state_key: null, notification_route: null}
+  production: {subscription_id: null, resource_group: null, state_key: null, notification_route: null}

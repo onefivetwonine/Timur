@@ -1,0 +1,111 @@
+name: Foundation CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: foundation-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  application:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: make check
+      - run: npm run build
+      - run: npm run test:runtime -w @timur/web
+      - name: Verify generated contract types are current
+        run: git diff --exit-code -- packages/contracts/src/generated.ts
+      - run: npm audit --omit=dev --audit-level=high
+      - name: Create dependency SBOM
+        run: npm sbom --omit=dev --sbom-format=cyclonedx > sbom.cdx.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: dependency-sbom
+          path: sbom.cdx.json
+          retention-days: 14
+  database:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16-bookworm
+        env:
+          POSTGRES_USER: timur_owner
+          POSTGRES_PASSWORD: ephemeral-ci-only
+          POSTGRES_DB: timur_poc
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd 'pg_isready -U timur_owner -d timur_poc'
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      TIMUR_ENVIRONMENT: poc
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: timur_owner
+      PGDATABASE: timur_poc
+      PGPASSWORD: ephemeral-ci-only
+      POSTGRES_USER: timur_owner
+      POSTGRES_DB: timur_poc
+      APP_DB_PASSWORD: ephemeral-ci-app-only
+      MIGRATION_DATABASE_URL: postgresql://timur_owner:ephemeral-ci-only@127.0.0.1:5432/timur_poc
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Use PostgreSQL 16 client tools
+        run: echo /usr/lib/postgresql/16/bin >> "$GITHUB_PATH"
+      - run: bash scripts/dev/init-db.sh
+      - run: node scripts/dev/migrate.mjs
+      - name: Reapplying unchanged migration is safe
+        run: node scripts/dev/migrate.mjs
+      - run: psql --set=ON_ERROR_STOP=1 --file=database/tests/tenant-isolation.sql
+      - name: Backup and restore into an isolated new database
+        run: python3 tests/integration/restore-roundtrip.py
+  infrastructure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3
+        with:
+          terraform_version: 1.15.9
+          terraform_wrapper: false
+      - run: make infra-check
+  containers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      matrix:
+        app: [api, web, worker]
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Validate local Compose specification
+        env:
+          POSTGRES_PASSWORD: ephemeral-ci-only
+          APP_DB_PASSWORD: ephemeral-ci-app-only
+        run: docker compose -f compose.poc.yaml config --quiet
+      - name: Build without publishing
+        env:
+          APP: ${{ matrix.app }}
+        run: docker build --file "apps/$APP/Dockerfile" --tag "timur/$APP:ci" .

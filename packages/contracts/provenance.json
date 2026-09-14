@@ -1,0 +1,37 @@
+{
+  "retrieved_on": "2026-09-13",
+  "status": "upstream drafts; not approved contracts",
+  "source_page": "https://app.gitbook.com/s/FkviPqGRiQmXp5lCD9IA/reference/canonical-schemas",
+  "files": [
+    {
+      "file": "opportunity-twin.schema.json",
+      "url": "https://106714892-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FFkviPqGRiQmXp5lCD9IA%2Fuploads%2FnarIh7Db7TFZ6RDejDVF%2Fopportunity-twin.schema.json?alt=media",
+      "sha256": "7b807d48748fdf48baff62b7b46322d7b5b1175ec0e0573d0c909daf7a9bf555",
+      "schema_id": "https://human-talent.example/schemas/opportunity-twin/0.2.1"
+    },
+    {
+      "file": "evidence-claim.schema.json",
+      "url": "https://106714892-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FFkviPqGRiQmXp5lCD9IA%2Fuploads%2F3jXurkzXWOLev24Y14Tp%2Fevidence-claim.schema.json?alt=media",
+      "sha256": "0fdf956e20ea8845ffacea365c5dc5068446479b802086161a077cbcb1602e18",
+      "schema_id": "https://human-talent.example/schemas/evidence-claim/0.2.1"
+    },
+    {
+      "file": "authority-grant.schema.json",
+      "url": "https://106714892-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FFkviPqGRiQmXp5lCD9IA%2Fuploads%2FweE39tdXP2gEnXHJaCr0%2Fauthority-grant.schema.json?alt=media",
+      "sha256": "062a49335d28a121f81d1dcb27b2e0fd999eb1cff7267e646b09762af549e9a0",
+      "schema_id": "https://human-talent.example/schemas/authority-grant/0.2.1"
+    },
+    {
+      "file": "decision-envelope.schema.json",
+      "url": "https://106714892-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FFkviPqGRiQmXp5lCD9IA%2Fuploads%2FMyAxWqMh5WfH734ucV6E%2Fdecision-envelope.schema.json?alt=media",
+      "sha256": "a72b81e446c99795cda3c8d51e25389f1ac1e09ac689f38976422a8ae7f233bf",
+      "schema_id": "https://human-talent.example/schemas/decision-envelope/0.2.1"
+    },
+    {
+      "file": "domain-event.schema.json",
+      "url": "https://106714892-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FFkviPqGRiQmXp5lCD9IA%2Fuploads%2FhKA1u5eBwPYDDJPb0wJl%2Fdomain-event.schema.json?alt=media",
+      "sha256": "326303f23570ea18421ab7dbd8a25bbef70247948aad4313701173a09a0412f2",
+      "schema_id": "https://human-talent.example/schemas/domain-event/0.2.1"
+    }
+  ]
+}

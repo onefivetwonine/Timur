@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://human-talent.example/schemas/evidence-claim/0.2.1",
+  "title": "Evidence Claim",
+  "description": "Versioned assertion with resolvable provenance, verification and contradiction state.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "tenant_id",
+    "claim_id",
+    "subject_id",
+    "predicate",
+    "value",
+    "source",
+    "observed_at",
+    "verification_state",
+    "confidence_band",
+    "processing_authority_ref"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.2.1" },
+    "tenant_id": { "type": "string", "minLength": 1 },
+    "claim_id": { "type": "string", "minLength": 1 },
+    "subject_id": { "type": "string", "minLength": 1 },
+    "predicate": { "type": "string", "pattern": "^[a-z][a-z0-9_.-]+$" },
+    "value": {},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "artefact_hash", "locator"],
+      "properties": {
+        "source_id": { "type": "string" },
+        "artefact_hash": { "type": "string" },
+        "locator": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["type", "start", "end"],
+              "properties": {
+                "type": { "const": "text_span" },
+                "start": { "type": "integer", "minimum": 0 },
+                "end": { "type": "integer", "minimum": 0 }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["type", "page"],
+              "properties": {
+                "type": { "const": "pdf_region" },
+                "page": { "type": "integer", "minimum": 1 },
+                "bbox": {
+                  "type": ["array", "null"],
+                  "prefixItems": [
+                    { "type": "number" },
+                    { "type": "number" },
+                    { "type": "number" },
+                    { "type": "number" }
+                  ],
+                  "minItems": 4,
+                  "maxItems": 4
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["type", "record_id", "path"],
+              "properties": {
+                "type": { "const": "record_path" },
+                "record_id": { "type": "string" },
+                "path": { "type": "string" }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["type", "sheet", "cell_range"],
+              "properties": {
+                "type": { "const": "spreadsheet_range" },
+                "sheet": { "type": "string" },
+                "cell_range": { "type": "string" }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "observed_at": { "type": "string", "format": "date-time" },
+    "valid_from": { "type": ["string", "null"], "format": "date" },
+    "valid_to": { "type": ["string", "null"], "format": "date" },
+    "verification_state": {
+      "enum": ["extracted", "recruiter_confirmed", "candidate_confirmed", "externally_verified", "rejected"]
+    },
+    "confidence_method": { "type": ["string", "null"] },
+    "confidence_band": { "enum": ["strong", "moderate", "weak", "unknown"] },
+    "contradiction_refs": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "processing_authority_ref": { "type": "string", "minLength": 1 },
+    "extractor": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "model_id": { "type": "string" },
+        "model_version": { "type": "string" },
+        "deployment_type": { "type": "string" },
+        "region": { "type": "string" },
+        "schema_version": { "type": "string" }
+      }
+    },
+    "supersedes": { "type": ["string", "null"] }
+  }
+}
+

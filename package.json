@@ -1,0 +1,25 @@
+{
+  "name": "timur",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Timur Human Talent Decision Intelligence — repository foundation",
+  "workspaces": ["packages/*", "apps/*"],
+  "engines": { "node": ">=24 <27", "npm": ">=11 <13" },
+  "scripts": {
+    "build": "npm run build -w @timur/runtime && npm run build -w @timur/contracts && npm run build -w @timur/api && npm run build -w @timur/worker && npm run build -w @timur/web",
+    "typecheck": "npm run build -w @timur/runtime && npm run typecheck --workspaces --if-present",
+    "test": "npm run build -w @timur/runtime && npm run test --workspaces --if-present",
+    "check": "npm run check:repository && npm run typecheck && npm test",
+    "check:repository": "python3 scripts/checks/repository.py",
+    "contracts:generate": "npm run generate -w @timur/contracts",
+    "dev:api": "npm run dev -w @timur/api",
+    "dev:web": "npm run dev -w @timur/web",
+    "dev:worker": "npm run dev -w @timur/worker"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.4",
+    "tsx": "4.23.13",
+    "typescript": "5.9.3",
+    "pg": "8.23.0"
+  }
+}

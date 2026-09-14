@@ -1,0 +1,17 @@
+{
+  "schema_version": "0.2.1",
+  "tenant_id": "synthetic-tenant-a",
+  "event_id": "synthetic-event-001",
+  "event_type": "SyntheticFixtureCreated",
+  "aggregate_type": "synthetic_fixture",
+  "aggregate_id": "synthetic-fixture-001",
+  "aggregate_version": 1,
+  "occurred_at": "2026-09-13T00:00:00Z",
+  "actor": {
+    "type": "system",
+    "id": "synthetic-fixture-generator"
+  },
+  "payload": {
+    "synthetic": true
+  }
+}

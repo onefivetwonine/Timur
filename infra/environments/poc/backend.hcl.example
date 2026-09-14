@@ -1,0 +1,6 @@
+resource_group_name  = "rg-timur-poc-state"
+storage_account_name = "<unique-poc-state-account>"
+container_name       = "tfstate"
+key                  = "timur/poc/terraform.tfstate"
+use_azuread_auth      = true
+use_oidc             = true

@@ -1,0 +1,11 @@
+{
+  "environment": "production",
+  "data_mode": "synthetic",
+  "external_ai_enabled": false,
+  "ai_provider": "deterministic",
+  "region": "southeastasia",
+  "job_transport": "azure_service_bus",
+  "live_data_accepted": false,
+  "outbound_recruitment_actions_enabled": false,
+  "purpose": "Production infrastructure foundation; synthetic acceptance until live-data controls pass"
+}

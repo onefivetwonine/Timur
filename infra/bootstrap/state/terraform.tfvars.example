@@ -1,0 +1,6 @@
+subscription_id          = "<environment-subscription-id>"
+environment              = "poc"
+storage_account_name     = "timurpocstateabc12"
+state_operator_object_id = "<entra-group-or-deployment-identity-object-id>"
+operator_public_ip_cidrs  = ["203.0.113.10"] # Documentation address; replace with the runner's fixed public IPv4.
+location                 = "southeastasia"
