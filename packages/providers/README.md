@@ -4,6 +4,8 @@ Adapters for Talent enrichment, market context, and talent-search peers. Each
 adapter pulls when credentials exist or returns `skipped`. Snapshots go to
 ignored `.local/provider-snapshots/` — never commit them.
 
+Product tracker (strategy + status): [`docs/architecture/data-sources.md`](../../docs/architecture/data-sources.md).
+
 ## Keys (`.local/providers.env`)
 
 | Provider | Env | Notes |

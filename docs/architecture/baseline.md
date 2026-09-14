@@ -23,6 +23,10 @@ archived material. The GitBook register is authoritative for its open decisions.
 | [Canonical schemas](https://app.gitbook.com/s/FkviPqGRiQmXp5lCD9IA/reference/canonical-schemas) | Import five drafts unchanged; generate shared types |
 | [Pending register](https://app.gitbook.com/s/FkviPqGRiQmXp5lCD9IA/pending-items-work-in-progress-and-discussion-register) | Formal approvals, live-data controls and measured acceptance stay open |
 
+Operational data-source strategy and provider tracker for this repository:
+[Data sources](data-sources.md). Keep that page aligned with GitBook when the
+product register accepts the same subsection.
+
 ## Implementation shape
 
 One TypeScript monorepo reduces cross-language contract drift. Next.js serves the

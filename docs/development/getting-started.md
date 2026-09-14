@@ -60,6 +60,7 @@ database, API liveness works and readiness reports unavailable.
 ## Further reading
 
 - [Architecture and source authority](../architecture/baseline.md)
+- [Data sources tracker](../architecture/data-sources.md)
 - [Environment configuration](../../config/README.md)
 - [Azure infrastructure and state setup](../../infra/README.md)
 - [Backup and disaster recovery](../operations/backup-and-recovery.md)

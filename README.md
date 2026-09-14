@@ -84,4 +84,6 @@ environment templates, and operational baselines. Product authority and open
 decisions remain in GitBook; this repo implements without silently closing them.
 
 For local setup, checks, and infrastructure procedures, see
-[Getting started](docs/development/getting-started.md) and the docs linked there.
+[Getting started](docs/development/getting-started.md). Data source strategy and
+the provider tracker live in
+[Data sources](docs/architecture/data-sources.md).
