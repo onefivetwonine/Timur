@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-# Push docs/architecture/data-sources.md into the Timur GitBook space via a change request.
-# Auth: GITBOOK_TOKEN in the environment or .local/gitbook.env (gitignored).
-# Token: https://app.gitbook.com/account/developer
+# Push docs/architecture/data-sources.md into GitBook under Architecture overview.
+# Auth: GITBOOK_TOKEN in .local/gitbook.env (gitignored).
 set -euo pipefail
 root="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$root"
@@ -13,6 +12,7 @@ set +a
 
 SPACE_ID="${GITBOOK_SPACE_ID:-FkviPqGRiQmXp5lCD9IA}"
 PAGE_TITLE="${GITBOOK_PAGE_TITLE:-Data sources}"
+PARENT_PATH="${GITBOOK_PARENT_PATH:-architecture-overview}"
 MARKDOWN_FILE="${1:-docs/architecture/data-sources.md}"
 
 gbapi() {
@@ -24,15 +24,18 @@ gbapi() {
 }
 
 markdown_json="$(python3 -c 'import json, pathlib, sys; print(json.dumps(pathlib.Path(sys.argv[1]).read_text()))' "$MARKDOWN_FILE")"
-
 user="$(gbapi GET /user)"
 python3 -c 'import json,sys; u=json.load(sys.stdin); print("Authenticated as", u.get("displayName") or u.get("id"))' <<<"$user"
 
 pages_json="$(gbapi GET "/spaces/${SPACE_ID}/content/pages")"
-mapfile -t ids < <(PAGE_TITLE="$PAGE_TITLE" python3 - <<'PY' <<<"$pages_json"
-import json, os, sys
-data = json.load(sys.stdin)
+printf '%s' "$pages_json" > /tmp/timur-gitbook-pages.json
+
+eval "$(PAGE_TITLE="$PAGE_TITLE" PARENT_PATH="$PARENT_PATH" python3 - <<'PY'
+import json, os
+from pathlib import Path
+data = json.loads(Path("/tmp/timur-gitbook-pages.json").read_text())
 title = os.environ["PAGE_TITLE"]
+want_path = os.environ["PARENT_PATH"].strip("/")
 pages = data.get("pages") or data.get("items") or []
 
 def walk(nodes):
@@ -44,38 +47,35 @@ existing = ""
 parent = ""
 for n in walk(pages):
     path = (n.get("path") or "").strip("/")
-    t = (n.get("title") or "")
-    if t == title:
+    t = n.get("title") or ""
+    if t == title or path.endswith("/data-sources") or path == "data-sources":
         existing = n["id"]
-    if path == "architecture-overview" or t.lower() in {
-        "architecture overview", "architecture", "working architecture"
-    }:
+    if path == want_path:
         parent = n["id"]
 if not parent:
     for n in walk(pages):
-        if "architecture" in (n.get("title") or "").lower():
+        if (n.get("title") or "").lower() == "architecture overview":
             parent = n["id"]
             break
-print(existing)
-print(parent)
+print(f"existing_id={existing!r}")
+print(f"parent_id={parent!r}")
 PY
-)
+)"
 
-existing_id="${ids[0]:-}"
-parent_id="${ids[1]:-}"
-if [ -z "$parent_id" ] && [ -z "$existing_id" ]; then
-  echo "Could not find an Architecture parent page or existing Data sources page in space $SPACE_ID" >&2
-  echo "$pages_json" | python3 -c 'import json,sys; d=json.load(sys.stdin); pages=d.get("pages") or d.get("items") or [];
-import pprint; pprint.pp([{k:n.get(k) for k in ("id","title","path")} for n in pages[:30]])'
+if [ -z "${parent_id:-}" ] && [ -z "${existing_id:-}" ]; then
+  echo "Could not find Architecture overview or Data sources page" >&2
   exit 1
 fi
 
+echo "Parent: ${parent_id:-none}"
+echo "Existing Data sources: ${existing_id:-none}"
+
 cr="$(gbapi POST "/spaces/${SPACE_ID}/change-requests" \
-  -d '{"subject":"Add Data sources tracker (Talent V0.1 providers)"}')"
+  -d '{"subject":"Update Data sources tracker (Talent V0.1 providers)"}')"
 cr_id="$(python3 -c 'import json,sys; print(json.load(sys.stdin)["id"])' <<<"$cr")"
 cr_url="$(python3 -c 'import json,sys; print(json.load(sys.stdin).get("urls",{}).get("app") or "")' <<<"$cr")"
 
-if [ -n "$existing_id" ]; then
+if [ -n "${existing_id}" ]; then
   body="$(EXISTING="$existing_id" MD="$markdown_json" python3 - <<'PY'
 import json, os
 print(json.dumps({
@@ -103,5 +103,5 @@ PY
 fi
 
 gbapi POST "/spaces/${SPACE_ID}/change-requests/${cr_id}/content" -d "$body" >/dev/null
-echo "GitBook change request: ${cr_url:-https://app.gitbook.com/s/${SPACE_ID}/~/changes/${cr_id}}"
-echo "Review and merge in GitBook to publish."
+echo "GitBook change request: ${cr_url}"
+echo "Merge the CR in GitBook to publish."
