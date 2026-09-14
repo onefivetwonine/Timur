@@ -7,6 +7,8 @@ Use Node 24, npm 11 or 12, Python 3, Docker Compose v2 and PostgreSQL 16 client
 tools. Docker and PostgreSQL clients are needed for the database/backup commands,
 not for package builds or unit tests. Terraform 1.7+ is needed for infrastructure
 checks; CI uses 1.15.9. Local development is a POC profile, not a third environment.
+Python remains only while legacy backup/check scripts exist; new product and ops
+code follows [ADR 0002 language boundaries](../architecture/decisions/0002-language-boundaries.md).
 
 ```sh
 make install

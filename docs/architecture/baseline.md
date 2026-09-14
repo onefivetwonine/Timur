@@ -34,6 +34,11 @@ web shell; a small Node HTTP API exposes health; an idle worker proves lifecycle
 and shutdown behavior. The future API remains a modular monolith. Split domain
 modules only as concrete workflows arrive; do not create dozens of empty services.
 
+Language boundaries for durability are recorded in
+[ADR 0002](decisions/0002-language-boundaries.md): TypeScript for product code,
+SQL for schema and RLS, HCL for Azure Terraform, TypeScript-first for new ops
+tooling. Existing Python backup/check scripts stay until deliberately migrated.
+
 Shared JSON Schema validation is a boundary aid, not evidence verification or
 authorization. A caller must derive tenant identity from authenticated membership.
 Database application roles have no ownership/BYPASSRLS; tenant-sensitive tables

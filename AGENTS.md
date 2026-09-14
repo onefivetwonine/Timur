@@ -20,6 +20,10 @@ edits scoped and report verification honestly.
 ## Engineering
 
 - One TypeScript monorepo; apps/web, apps/api, apps/worker share packages.
+- Language boundaries: TypeScript for product code; SQL for schema/RLS; HCL for
+  Azure Terraform; TypeScript-first for new ops tooling; Bash only for thin
+  wrappers. See `docs/architecture/decisions/0002-language-boundaries.md`.
+  Do not add languages or rewrite working Python/Terraform/SQL without cause.
 - Azure and PostgreSQL remain the platform and system of record. Keep POC and
   production state, identities, storage, secrets and deployment targets separate.
 - Schema assets imported from GitBook remain drafts; record source and hash.
