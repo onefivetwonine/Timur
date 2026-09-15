@@ -86,4 +86,6 @@ decisions remain in GitBook; this repo implements without silently closing them.
 For local setup, checks, and infrastructure procedures, see
 [Getting started](docs/development/getting-started.md). Data source strategy and
 the provider tracker live in
-[Data sources](docs/architecture/data-sources.md).
+[Data sources](docs/architecture/data-sources.md). Near-term Talent V0.1 exits
+and what each milestone unlocks:
+[V0.1 engineering milestones](docs/plans/v0.1-milestones.md).

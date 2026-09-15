@@ -5,6 +5,11 @@ production controls exist. The initial user request is fulfilled by the reposito
 foundation. Subsequent stages turn it into a working Talent product and operated
 service; each stage has concrete exit evidence.
 
+**Talent V0.1 next exits:** the six engineering milestones, what each unlocks, and
+the shared GitHub/GitBook tracker live in
+[v0.1-milestones.md](v0.1-milestones.md). Prefer that board for near-term status;
+this page remains the longer stage map.
+
 | Stage | Deliverables | Exit evidence |
 | --- | --- | --- |
 | Foundation (this repository) | Workspace, service shells, imported schemas, environment roots, SQL infrastructure, CI, backup/incident plans | Package checks/builds; Terraform validation/mock tests; local database/restore evidence where tools permit |
